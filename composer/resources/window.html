@@ -1,0 +1,112 @@
+<div id="root{{.ID}}"
+	style="z-index:{{.Layer}}; border: 1.5px solid var(--select); position:absolute; background:#ccc; left:{{.Location.X}}px; top:{{.Location.Y}}px;">
+	<table id="handle{{.ID}}" style="background-color:#222;">
+		<caption>
+			<table style="width: 100%%; background-color:#333;">
+				<colgroup>
+					<col span="0" style="width: 50px;">
+					<col span="0" style="width: 100%%;">
+					<col span="0" style="width: 50px;">
+					<col span="0" style="width: 50px;">
+					<col span="0" style="width: 50px;">
+					<col span="0" style="width: 50px;">
+					<col span="0" style="width: 50px;">
+				</colgroup>
+
+
+
+				<!-- Put <thead>, <tbody>, and <tr>'s here! -->
+				<tbody>
+					<tr>
+						<td><img width="22" src="{{.Icon}}" /></td>
+						<td>
+							<p>{{.Title}}</p>
+						</td>
+						<td><img height="22"
+								src="https://img.icons8.com/material-outlined/24/000000/change-theme.png" /></td>
+						<td class="hide{{.ID}}"><img height="22"
+								src="https://img.icons8.com/fluent-systems-regular/24/000000/macos-minimize.png" /></td>
+						<td><img height="22" src="https://img.icons8.com/metro/26/000000/maximize-button.png" /></td>
+						<td><img height="22"
+								src="https://img.icons8.com/material-sharp/24/000000/full-screen--v1.png" /></td>
+						<td><button onClick="close(1);" id="buttonclose"><img height="22"
+							src="https://img.icons8.com/windows/32/000000/macos-close.png" /></button>
+							</td>
+					</tr>
+				</tbody>
+			</table>
+		</caption>
+
+		<thead>
+			<tr>
+				<th>1</th>
+				<th>Head</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<th>2</th>
+				<th><iframe width="{{.Size.W}}px" height="{{.Size.H}}px" src="{{.Src}}" frameborder="0"></iframe></th>
+			</tr>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<th>3</th>
+				<th>
+					<table style="width:100%%;">
+						<colgroup>
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+							<col span="0" style="width: auto;">
+						</colgroup>
+						<tbody>
+							<tr>
+								<td>
+									<p>Stato: Pronto</p>
+								</td>
+								<td>
+									<p>Messaggi: Avviato con successo "{{.Title}}"</p>
+								</td>
+								<td>
+									<p>CPU:</p>
+								</td>
+								<td>
+									<p>RAM:</p>
+								</td>
+								<td>
+									<p>DISK:</p>
+								</td>
+								<td>
+									<p>NET:</p>
+								</td>
+								<td>
+									<p>Time:</p>
+								</td>
+								<td>
+									<p>Mouse:</p>
+								</td>
+								<td>
+									<p>Location:{{.Location.X}} - {{.Location.Y}}</p>
+								</td>
+								<td>
+									<p>Size:{{.Size.W}}x{{.Size.H}}</p>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</th>
+			</tr>
+		</tfoot>
+	</table>
+</div>

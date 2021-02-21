@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="UTF-8">
+	<title>{{.Title}}</title>
+	<link rel="icon" href="https://img.icons8.com/color/48/000000/folder-invoices--v2.png">
+	<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+	<!-- this should be on top of your HTML <head> scripts -->
+	<script src="//unpkg.com/@ungap/custom-elements"></script>
+	<script type="module" src="https://unpkg.com/x-frame-bypass"></script>
+
+	<script src="/.habitat/wasm_exec.js"></script>
+	<!-- Link -->
+	<!-- CSS -->
+    <!-- Script -->
+	<!-- WebAssembly -->
+	<script>
+		if (!WebAssembly.instantiateStreaming) {
+			// polyfill
+			WebAssembly.instantiateStreaming = async (resp, importObject) => {
+				const source = await (await resp).arrayBuffer();
+				return await WebAssembly.instantiate(source, importObject);
+			};
+		}
+
+		const go = new Go();
+		let mod, inst;
+		WebAssembly.instantiateStreaming(fetch("/.habitat/lib.wasm"), go.importObject).then(
+			async result => {
+				mod = result.module;
+				inst = result.instance;
+				await go.run(inst);
+			}
+		);
+	</script>
+
+
+	<style type="text/css">
+		:root {
+			--blue: #1e90ff;
+			--select: #111;
+		}
+
+		body {
+			background-image: url("{{.Background}}");
+			background-size: cover;
+			font-family: 'Abel', sans-serif;
+			padding: 0px;
+			margin: 0px;
+			overflow: hidden;
+			color: #fff;
+		}
+
+		* {
+			margin: 0px;
+		}
+
+		button {
+			margin: 0px;
+			padding-left: 2px;
+			padding-right: 2px;
+			border: 0px;
+			background-color: #fff0;
+			color: red;
+		}
+
+		table {
+			margin: 0px;
+			padding: 0px;
+			border: 0px;
+		}
+	</style>
+
+</head>
+
+<body>
+	<!-- Put <thead>, <tbody>, and <tr>'s here! -->
+		{{range .Window}}{{ . }}{{end}}
+	<!-- Put <thead>, <tbody>, and <tr>'s here! -->
+</body>
+
+</html>
