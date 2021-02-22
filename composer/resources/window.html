@@ -1,11 +1,11 @@
 <div id="root{{.ID}}"
-	style="z-index:{{.Layer}}; border: 1.5px solid var(--select); position:absolute; background:#ccc; left:{{.Location.X}}px; top:{{.Location.Y}}px;">
+	style="z-index:0; border: 1.5px solid var(--select); position:absolute; background:#ccc; left:{{.Location.X}}px; top:{{.Location.Y}}px;">
 	<table id="handle{{.ID}}" style="background-color:#222;">
 		<caption>
 			<table style="width: 100%%; background-color:#333;">
 				<colgroup>
 					<col span="0" style="width: 50px;">
-					<col span="0" style="width: 100%%;">
+					<col span="0" style="width: 100%;">
 					<col span="0" style="width: 50px;">
 					<col span="0" style="width: 50px;">
 					<col span="0" style="width: 50px;">
@@ -47,7 +47,7 @@
 		<tbody>
 			<tr>
 				<th>2</th>
-				<th><iframe width="{{.Size.W}}px" height="{{.Size.H}}px" src="{{.Src}}" frameborder="0"></iframe></th>
+				<th><iframe width="{{.Size.Width}}px" height="{{.Size.Height}}px" src="{{.Src}}" frameborder="0"></iframe></th>
 			</tr>
 		</tbody>
 
@@ -96,10 +96,10 @@
 									<p>Mouse:</p>
 								</td>
 								<td>
-									<p>Location:{{.Location.X}} - {{.Location.Y}}</p>
+									<p>Location:{{.Location.X}} - {{.Location.Y}}px</p>
 								</td>
 								<td>
-									<p>Size:{{.Size.W}}x{{.Size.H}}</p>
+									<p>Size:{{.Size.Width}} x {{.Size.Height}}px</p>
 								</td>
 
 							</tr>

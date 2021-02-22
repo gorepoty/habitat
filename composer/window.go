@@ -5,8 +5,6 @@ import (
 	"embed"
 	"html/template"
 	"syscall/js"
-
-	"github.com/PuerkitoBio/goquery"
 )
 
 // content holds our static web server content.
@@ -68,92 +66,106 @@ type Window struct {
 	Title    string
 	Subtitle string
 	Icon     string
-	Layer    string
-	Focus    string
-	Lang     string
-	Scale    string
-	Location WindowLocation
-	Screen   string
-	Size     WindowSize
 	Src      string
-	Event
+	Focus    string
+	Scale    string
+	Document *js.Value
+	Location WindowLocation
+	Size     WindowSize
+	Events   Event
 }
 
 // WindowSize ...
 type WindowSize struct {
-	W, H string
+	Width, Height int
 }
 
 // WindowLocation ...
 type WindowLocation struct {
-	X, Y string
+	X, Y int
 }
 
 // New ...
-func (w *Window) New(id, width, height, x, y, src string) {
+func (w *Window) New(id, src string, width, height, x, y int, document *js.Value) {
 
-	doc, _ := goquery.NewDocument(src)
-
-	// use CSS selector found with the browser inspector
-	// for each, use index and item
+	// Assignment of values
 	w.ID = id
-	w.Title = doc.Find("title").Contents().Text()
+	w.Title = ""
 	w.Icon = "https://img.icons8.com/fluent-systems-filled/24/000000/image-not-avialable.png"
-	w.Size.W = width
-	w.Size.H = height
+	w.Size.Width = width
+	w.Size.Height = height
 	w.Location.X = x
 	w.Location.Y = y
 	w.Src = src
+	w.Document = document
 
-	doc.Find("link").Each(func(index int, item *goquery.Selection) {
-		if item.AttrOr("rel", "") == "icon" {
-			w.Icon = item.AttrOr("href", "")
-		}
-	})
+	// Print the window on the screen
+	w.Print()
 
-	document := js.Global().Get("document")
+	// Find window on screen with id
+	body := w.Document.Call("getElementById", "root"+w.ID)
 
-	test := document.Call("createElement", "div")
-	test.Set("innerHTML", string(w.Body()))
+	//cb := js.FuncOf(w.Close)
 
-	document.Get("body").Call("appendChild", test) //2. Exposing go functions/values in javascript variables.
-
-	canvas := document.Call("getElementById", "root0")
-
-	cb := js.FuncOf(w.Close)
+	w.Events.Task = js.FuncOf(w.Close)
 
 	//w.Even["close"] = cb
 	//defer cb.Release()
+	//println("root" + w.ID)
 
-	EventAdd(js.Global(), canvas, EventTypeClick, cb)
+	EventAdd(js.Global(), body, EventTypeClick, w.Events.Task)
 
 }
 
 // Body ...
 func (w *Window) Body() template.HTML {
 
-	data, _ := windowBody.ReadFile("resources/window.html")
+	// Reads the file via variable embed
+	file, _ := windowBody.ReadFile("resources/window.html")
 
-	loadwin, _ := template.New("window").Parse(string(data))
+	// Create a body with the right values
+	body, _ := template.New("window").Parse(string(file))
 
-	bufwin := new(bytes.Buffer)
-	loadwin.Execute(bufwin, w)
+	buf := new(bytes.Buffer)
+	body.Execute(buf, w)
 
-	return template.HTML(bufwin.String())
+	// returns a structure html
+	return template.HTML(buf.String())
+}
+
+// Refresh ...
+func (w *Window) Refresh() {
+
+	document := js.Global().Get("document")
+	root := document.Call("getElementById", "root"+w.ID)
+	root.Call("setAttribute", "style", "top:0px; left:0px;")
+}
+
+// Print ...
+func (w *Window) Print() {
+
+	// Create a div
+	body := w.Document.Call("createElement", "div")
+
+	// Inserts the body
+	body.Set("innerHTML", string(w.Body()))
+
+	// Adds the body to the screen
+	w.Document.Get("body").Call("appendChild", body)
+
 }
 
 // Close ...
 func (w *Window) Close(this js.Value, i []js.Value) interface{} {
 
+	// Find window on screen with id
+	body := w.Document.Call("getElementById", "root"+w.ID)
+	// Delete the window
+	body.Set("innerHTML", "Z")
+
 	println("root" + w.ID)
-	document := js.Global().Get("document")
 
-	//document.Get("body").Set("innerHTML", "Z") //2. Exposing go functions/values in javascript variables.
-	canvas := document.Call("getElementById", "root"+w.ID)
-	canvas.Set("innerHTML", "Z")
-	//document.Get("body").Call("appendChild", canvas)
-
-	println("close")
+	// return 0
 	return js.ValueOf(0)
 
 }

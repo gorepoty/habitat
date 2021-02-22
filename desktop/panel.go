@@ -1,4 +1,4 @@
-package composer
+package desktop
 
 import (
 	"bytes"

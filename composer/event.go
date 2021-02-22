@@ -11,7 +11,8 @@ const (
 
 // Event ...
 type Event struct {
-	Even map[string]js.Func
+	Task   js.Func
+	Signal chan bool
 }
 
 // EventAdd ...
