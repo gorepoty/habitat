@@ -5,6 +5,8 @@ import (
 	"embed"
 	"html/template"
 	"syscall/js"
+
+	"github.com/google/uuid"
 )
 
 // content holds our static web server content.
@@ -43,13 +45,6 @@ const (
 	WindowShieldTrusted = "2"
 )
 
-// Layout
-const (
-	WindowLayoutTiling   = "1"
-	WindowLayoutFloating = "2"
-	WindowLayoutMono     = "0"
-)
-
 // State
 const (
 	WindowStateExecution = "0"
@@ -86,10 +81,12 @@ type WindowLocation struct {
 }
 
 // New ...
-func (w *Window) New(id, src string, width, height, x, y int, document *js.Value) {
+func (w *Window) New(src string, width, height, x, y int, document *js.Value) {
+
+	// Generate an ID
 
 	// Assignment of values
-	w.ID = id
+	w.ID = uuid.New().String()
 	w.Title = ""
 	w.Icon = "https://img.icons8.com/fluent-systems-filled/24/000000/image-not-avialable.png"
 	w.Size.Width = width
@@ -139,6 +136,11 @@ func (w *Window) Refresh() {
 	document := js.Global().Get("document")
 	root := document.Call("getElementById", "root"+w.ID)
 	root.Call("setAttribute", "style", "top:0px; left:0px;")
+}
+
+// Layout ...
+func (w *Window) Layout() {
+
 }
 
 // Print ...

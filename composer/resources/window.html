@@ -1,6 +1,5 @@
-<div id="root{{.ID}}"
-	style="z-index:0; border: 1.5px solid var(--select); position:absolute; background:#ccc; left:{{.Location.X}}px; top:{{.Location.Y}}px;">
-	<table id="handle{{.ID}}" style="background-color:#222;">
+<div id="root{{.ID}}" style="z-index:0; border: 1.5px solid var(--select); position:absolute; background:#ccc; left:{{.Location.X}}px; top:{{.Location.Y}}px;">
+	<table id="handle{{.ID}}" style="background-color:#222; width:{{.Size.Width}}px; height:{{.Size.Height}}px;">		
 		<caption>
 			<table style="width: 100%%; background-color:#333;">
 				<colgroup>
@@ -44,10 +43,10 @@
 			</tr>
 		</thead>
 
-		<tbody>
-			<tr>
+		<tbody height="100%">
+			<tr height="100%">
 				<th>2</th>
-				<th><iframe width="{{.Size.Width}}px" height="{{.Size.Height}}px" src="{{.Src}}" frameborder="0"></iframe></th>
+				<th height="100%"><iframe width="100%" height="100%" src="{{.Src}}" frameborder="0"></iframe></th>
 			</tr>
 		</tbody>
 
@@ -55,7 +54,7 @@
 			<tr>
 				<th>3</th>
 				<th>
-					<table style="width:100%%;">
+					<table style="width:100%;">
 						<colgroup>
 							<col span="0" style="width: auto;">
 							<col span="0" style="width: auto;">

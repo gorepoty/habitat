@@ -9,25 +9,25 @@ const (
 	ScreenLayoutMono     = "0"
 )
 
-// Screen ...
-type Screen struct {
-	Size     ScreenSize
+// WorkSpace  ...
+type WorkSpace struct {
+	Size     WorkSpaceSize
 	Layout   LayoutTiling
 	Windows  map[string][]*Window
 	Document *js.Value
 }
 
-// ScreenSize ...
-type ScreenSize struct {
+// WorkSpaceSize ...
+type WorkSpaceSize struct {
 	Width  int
 	Height int
 }
 
 // Refresh ...
-func (s *Screen) Refresh() {
+func (w *WorkSpace) Refresh() {
 
 	//s.Layout.Windows = s.Windows[s.Layout.ID]
-	s.Layout.Screen = s
-	s.Layout.New()
+	w.Layout.WorkSpace = w
+	w.Layout.New()
 
 }
