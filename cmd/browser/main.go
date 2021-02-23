@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ui.Load("http://localhost:8090/habitat")
+	ui.Load("http://localhost:8090/")
 	ui.SetBounds(lorca.Bounds{WindowState: lorca.WindowStateFullscreen})
 	defer ui.Close()
 	// Wait until UI window is closed

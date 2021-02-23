@@ -5,6 +5,7 @@ const (
 	LayoutTypeTiling   = 0
 	LayoutTypeFloating = 1
 	LayoutTypeMono     = 2
+	LayoutTypeDock     = 3
 )
 
 // Layout ...

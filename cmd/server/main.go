@@ -16,12 +16,11 @@ func hello(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
-	//go web.Browser()
+	go server.Browser()
 	server.Server()
 
-	/*
-		for true {
+	for true {
 
-		}*/
+	}
 
 }
